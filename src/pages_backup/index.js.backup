@@ -1,0 +1,299 @@
+import Head from "next/head";
+import HomeUI from "@/components/UI/Home";
+import useFeaturedCampaignsFetch from "../hooks/useFeaturedCampaignsFetch";
+import { getAllCampaignsBasedOnQuery } from "@/api/get-api-services";
+import { useRouter } from "next/router";
+import { getThumbnailUrl } from "@/utils/helpers";
+import { useEffect } from "react";
+import { handlePosthog } from "@/api/post-api-services";
+import { enhancedHandlePosthog } from "@/utils/posthogHelper";
+import { getCookie } from "cookies-next";
+// import { trackFontLoadPerformance } from "@/utils/fontOptimization";
+import { useDispatch } from "react-redux";
+import { isLoginModalOpen } from "@/store/slices/authSlice";
+import { CONSENT_COOKIE_NAME } from "@/config/constant";
+// import posthog from "posthog-js";
+
+// const leagueSpartan = League_Spartan({ subsets: ["latin"] });
+
+const DEFAULT_IMAGE =
+  "https://madinah-dev.s3.us-east-1.amazonaws.com/campaign-cover-images/1000X1000/Cxl9fn-1730095218.png";
+export default function Home({
+  mutatedCampaignsArr,
+  loadingfeaturedCampaigns,
+  hasErrorfeaturedCampaigns,
+  campaignsStillRemaining,
+  currentPage,
+  cfCountry,
+}) {
+  const {
+    featuredCampaigns: campaigns,
+    loadingfeaturedCampaigns: isLoading,
+    hasErrorfeaturedCampaigns: hasError,
+    increasePage,
+    decreasePage,
+    campaignsStillRemaining: stillRemaining,
+    currentPage: page,
+  } = useFeaturedCampaignsFetch({
+    mutatedCampaignsArr,
+    loadingfeaturedCampaigns,
+    hasErrorfeaturedCampaigns,
+    campaignsStillRemaining,
+    currentPage,
+  });
+
+  // const { data: session } = useSession();
+  // if (session) {
+  //   console.log("Access Token:", session);
+  // }
+
+  // useEffect(() => {
+  //   if (!auth && session?.user?.accessToken && googleToken) {
+  //     console.log(
+  //       "Calling socialAuth with accessToken:",
+  //       session.user.accessToken,
+  //     );
+  //     socialAuth("google", session.user.accessToken);
+  //   }
+  // }, [session, socialAuth, auth]);
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const consentCookie = getCookie(CONSENT_COOKIE_NAME);
+  let parsedConsent = {};
+  if (consentCookie) {
+    parsedConsent = JSON.parse(consentCookie);
+  }
+  const canonicalUrl = `https://www.madinah.com${router.asPath}`;
+
+  // Save cfCountry to localStorage if available
+  useEffect(() => {
+    if (cfCountry) {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("cfCountry", cfCountry);
+      }
+    }
+  }, [cfCountry]);
+
+  useEffect(() => {
+    // Wait for PostHog to be initialized before capturing events
+    const captureHomepageVisit = () => {
+      const userId = getCookie("distinctId");
+      console.log("Homepage Visit - distinctId:", userId);
+      const payload = {
+        distinctId: userId,
+        event: "Homepage Visit",
+        properties: {
+          $current_url: "https://www.madinah.com",
+          // Enhanced properties will be automatically added by handlePosthog function
+        },
+      };
+      console.log("Homepage Visit Payload:", payload);
+      if (parsedConsent?.analytics || !consentCookie) {
+        console.log("Sending Homepage Visit event to PostHog");
+        enhancedHandlePosthog(handlePosthog, payload, "Madinah - Homepage");
+      }
+    };
+
+    // Check if PostHog is already initialized, if not wait a bit
+    if (typeof window !== "undefined") {
+      const checkPostHogAndCapture = () => {
+        const posthog = require("posthog-js").default;
+        if (posthog && posthog.__loaded) {
+          captureHomepageVisit();
+        } else {
+          // PostHog not yet initialized, wait and retry
+          setTimeout(checkPostHogAndCapture, 100);
+        }
+      };
+
+      // Small delay to ensure ConditionalAnalytics has initialized PostHog
+      setTimeout(checkPostHogAndCapture, 200);
+    }
+
+    // Track font loading performance for LCP optimization
+    if (typeof window !== "undefined") {
+      const shouldShowLoginModal = localStorage.getItem(
+        "showLoginModalAfterRedirect"
+      );
+      if (shouldShowLoginModal === "true") {
+        localStorage.removeItem("showLoginModalAfterRedirect");
+        // Add a small delay to ensure the page has loaded completely
+        setTimeout(() => {
+          dispatch(isLoginModalOpen(true));
+        }, 1000);
+      }
+    }
+    // trackFontLoadPerformance();
+  }, [dispatch]);
+  // Check for localStorage flag to show login modal on home page
+
+  return (
+    <>
+      <Head>
+        <title>Madinah</title>
+        <meta
+          name="description"
+          content="Trusted fundraising for all of life's moments..."
+        />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta
+          name="robots"
+          content={
+            process.env.NEXT_PUBLIC_ENV === "production"
+              ? "index, follow"
+              : "noindex, nofollow"
+          }
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+          rel="icon"
+          href="https://madinah.s3.us-east-2.amazonaws.com/favicon.ico"
+        />
+        <meta
+          name="og:image"
+          content="https://madinah.s3.us-east-2.amazonaws.com/test1.png"
+        />
+      </Head>
+      <main>
+        <HomeUI
+          mutatedCampaignsArr={campaigns}
+          loadingfeaturedCampaigns={isLoading}
+          hasErrorfeaturedCampaigns={hasError}
+          increasePage={increasePage}
+          decreasePage={decreasePage}
+          campaignsStillRemaining={stillRemaining}
+          currentPage={page}
+        />
+      </main>
+    </>
+  );
+}
+
+// const mapCampaignData = (campaign) => ({
+//   id: campaign.randomToken,
+//   image: campaign.coverImageUrl
+//     ? campaign.coverImageUrl
+//     : getYoutubeThumbnail(campaign.videoLinks[0]?.url),
+//   title: campaign.title,
+//   subtitle: campaign.subTitle,
+//   raisedAmount: campaign.collectedAmount,
+//   totalGoal: campaign.targetAmount,
+//   raisedCurrency: campaign.currencySymbol || null,
+//   recurringDonation: campaign.isRecurringDonation || false,
+//   oneTimeDonation: campaign.isOneTimeDonation || false,
+// });
+
+const mapCampaignData = (campaign) => {
+  let image;
+  if (campaign.coverImageUrl !== "") {
+    image = campaign.coverImageUrl;
+  } else if (campaign.videoLinks && campaign.videoLinks[0]?.url) {
+    image = getThumbnailUrl(campaign.videoLinks[0].url);
+    if (!image) {
+      image = DEFAULT_IMAGE;
+    }
+  } else {
+    image = DEFAULT_IMAGE; // or a placeholder image URL
+  }
+
+  return {
+    id: campaign.randomToken,
+    image: image,
+    coverImageUrl: campaign.coverImageUrl,
+    videoLinks: campaign.videoLinks,
+    title: campaign.title,
+    subtitle: campaign.subTitle,
+    raisedAmount: campaign.collectedAmount,
+    totalGoal: campaign.targetAmount,
+    raisedCurrency: campaign.currencySymbol || null,
+    recurringDonation: campaign.isRecurringDonation || false,
+    oneTimeDonation: campaign.isOneTimeDonation || false,
+  };
+};
+
+export async function getServerSideProps(context) {
+  // Helper function to validate IPv4
+  const getIPv4 = (ip) => {
+    const ipv4Regex = /^(\d{1,3}\.){3}\d{1,3}$/;
+    if (!ip) return null;
+    const addresses = ip.split(/,\s*/);
+    for (const addr of addresses) {
+      if (ipv4Regex.test(addr)) {
+        return addr;
+      }
+    }
+    return null;
+  };
+
+  const requestHeaders = context?.req?.headers;
+  const cfCountry = requestHeaders?.["cf-ipcountry"]; // Retrieve CF-IPCountry
+  const cfIp = context?.req?.headers["cf-connecting-ip"];
+  const forwarded = context?.req?.headers["x-forwarded-for"];
+
+  // Get IPv4 address
+  let ip = null;
+  if (cfIp) {
+    ip = getIPv4(cfIp);
+  }
+  if (!ip && forwarded) {
+    ip = getIPv4(forwarded); // Fallback to x-forwarded-for
+  }
+  if (!ip && context?.req?.socket?.remoteAddress) {
+    // This will likely be a Cloudflare IP if cfIp and forwarded are missing or invalid, so it's a last resort
+    ip = getIPv4(context.req.socket.remoteAddress);
+  }
+  if (!ip) {
+    ip = "0.0.0.0"; // fallback IP if no valid IPv4 is found
+  }
+
+  try {
+    const res = await getAllCampaignsBasedOnQuery(
+      { type: "featured" },
+      5,
+      0,
+      ip,
+      cfCountry // Default to US if no country code is found
+    );
+
+    if (!res || !res.data || !res.data.success) {
+      return {
+        props: {
+          mutatedCampaignsArr: [],
+          loadingfeaturedCampaigns: false,
+          hasErrorfeaturedCampaigns: true,
+          campaignsStillRemaining: false,
+          currentPage: 0,
+        },
+      };
+    }
+
+    const campaigns = res.data.data.campaigns || [];
+
+    const mutatedCampaignsArr = campaigns.map(mapCampaignData);
+
+    return {
+      props: {
+        mutatedCampaignsArr,
+        loadingfeaturedCampaigns: false,
+        hasErrorfeaturedCampaigns: false,
+        campaignsStillRemaining: res.data.data.isMoreRecordsExist || false,
+        currentPage: 0,
+        cfCountry: cfCountry || null,
+      },
+    };
+  } catch (error) {
+    console.error("Failed to fetch initial data:", error);
+    return {
+      props: {
+        mutatedCampaignsArr: [],
+        loadingfeaturedCampaigns: false,
+        hasErrorfeaturedCampaigns: true,
+        campaignsStillRemaining: false,
+        currentPage: 0,
+        cfCountry: cfCountry || null,
+      },
+    };
+  }
+}
+
+Home.withHeroSection = true;

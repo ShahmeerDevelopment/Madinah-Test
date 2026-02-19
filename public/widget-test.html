@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Widget Test Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .test-section {
+        margin: 40px 0;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #f9f9f9;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Madinah Widget Test Page</h1>
+
+    <div class="test-section">
+      <h2>Script Embed Test (Replace with your campaign token)</h2>
+      <p>This tests the script-based embed system:</p>
+
+      <!-- Replace 'YOUR_CAMPAIGN_TOKEN' with an actual token from your campaigns -->
+      <div
+        class="madinah-embed"
+        data-url="https://md-user-frontend-dev-ad9351cfa1ac.herokuapp.com/newcampaingtestingduplicate?widget=true&embedded=true"
+        data-width="400px"
+        data-height="600px"
+      ></div>
+      <script
+        defer
+        src="https://md-user-frontend-dev-ad9351cfa1ac.herokuapp.com/widget-embed.js"
+      ></script>
+    </div>
+
+    <div class="test-section">
+      <h2>iFrame Embed Test (Replace with your campaign token)</h2>
+      <p>This tests the traditional iframe embed:</p>
+
+      <!-- Replace 'YOUR_CAMPAIGN_TOKEN' with an actual token from your campaigns -->
+      <iframe
+        src="https://md-user-frontend-dev-ad9351cfa1ac.herokuapp.com/newcampaingtestingduplicate?widget=true&embedded=true"
+        width="400px"
+        height="600px"
+        frameborder="0"
+        style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1)"
+        title="Campaign Widget Test"
+      >
+      </iframe>
+    </div>
+
+    <div class="test-section">
+      <h2>Instructions</h2>
+      <ol>
+        <li>
+          Replace 'YOUR_CAMPAIGN_TOKEN' with an actual campaign token from your
+          app
+        </li>
+        <li>Start your Next.js dev server: <code>npm run dev</code></li>
+        <li>
+          Visit:
+          <code
+            >https://md-user-frontend-dev-ad9351cfa1ac.herokuapp.com/widget-test.html</code
+          >
+        </li>
+        <li>You should see both embed methods working</li>
+      </ol>
+    </div>
+  </body>
+</html>

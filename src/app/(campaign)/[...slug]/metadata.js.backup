@@ -1,0 +1,115 @@
+import { headers } from "next/headers";
+import { getSingleCampaignDataServer } from "@/app/api-services.server";
+import { getThumbnailUrl } from "@/utils/helpers";
+import { RANDOM_URL } from "@/config/constant";
+
+/**
+ * Helper function to validate IPv4
+ */
+function getIPv4(ip) {
+  const ipv4Regex = /^(\d{1,3}\.){3}\d{1,3}$/;
+  if (!ip) return null;
+  const addresses = ip.split(/,\s*/);
+  for (const addr of addresses) {
+    if (ipv4Regex.test(addr)) return addr;
+  }
+  return null;
+}
+
+/**
+ * Generate metadata for SEO
+ * This is separate from the page component to avoid issues with PPR
+ */
+export async function generateMetadata({ params, searchParams }) {
+  const { slug } = await params;
+  const resolvedSearchParams = await searchParams;
+  const headersList = await headers();
+
+  const cfCountry = headersList.get("cf-ipcountry");
+  const cfIp = headersList.get("cf-connecting-ip");
+  const forwarded = headersList.get("x-forwarded-for");
+
+  let ip = cfIp ? getIPv4(cfIp) : null;
+  if (!ip && forwarded) ip = getIPv4(forwarded);
+  if (!ip) ip = "0.0.0.0";
+
+  const utmParams = {
+    utm_source: resolvedSearchParams?.utm_source,
+    utm_medium: resolvedSearchParams?.utm_medium,
+    utm_campaign: resolvedSearchParams?.utm_campaign,
+    utm_term: resolvedSearchParams?.utm_term,
+    utm_content: resolvedSearchParams?.utm_content,
+    referral: resolvedSearchParams?.referral,
+  };
+
+  const campaignRes = await getSingleCampaignDataServer(
+    slug,
+    ip,
+    cfCountry,
+    utmParams
+  );
+  const campaignDetails = campaignRes?.data?.data?.campaignDetails;
+
+  if (!campaignDetails) {
+    return {
+      title: "Campaign Not Found",
+    };
+  }
+
+  const isWidgetMode =
+    resolvedSearchParams?.widget === "true" &&
+    resolvedSearchParams?.embedded === "true";
+
+  // Determine cover image
+  const { coverImageUrl, videoLinks = [] } = campaignDetails;
+  let coverMedia = coverImageUrl || videoLinks[0]?.url || "";
+  let image = coverMedia;
+
+  if (coverMedia && coverMedia.match(/youtube\.com|youtu\.be|vimeo\.com/i)) {
+    image = getThumbnailUrl(coverMedia);
+  }
+
+  const slugPath = Array.isArray(slug) ? slug.join("/") : slug;
+
+  return {
+    title: isWidgetMode
+      ? `${campaignDetails.title} - Widget`
+      : campaignDetails.title,
+    description: campaignDetails.subTitle,
+    openGraph: {
+      title: campaignDetails.title,
+      description: campaignDetails.subTitle,
+      images: image
+        ? [
+            {
+              url: image,
+              secureUrl: image,
+              width: 1200,
+              height: 630,
+            },
+          ]
+        : [],
+      type: "website",
+      url: `${RANDOM_URL}${slugPath}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: image ? [image] : [],
+    },
+    robots: isWidgetMode ? "noindex, nofollow" : undefined,
+    icons: {
+      icon: "https://madinah.s3.us-east-2.amazonaws.com/favicon.ico",
+      shortcut: "https://madinah.s3.us-east-2.amazonaws.com/favicon.ico",
+      apple: "https://madinah.s3.us-east-2.amazonaws.com/test1.png",
+    },
+    // Preload LCP image for faster mobile performance
+    other: image ? {
+      'link': {
+        rel: 'preload',
+        as: 'image',
+        href: campaignDetails?.thumbnailCoverImageUrl || image,
+        fetchpriority: 'high',
+      }
+    } : {},
+  };
+}

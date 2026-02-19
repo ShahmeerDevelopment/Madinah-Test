@@ -1,0 +1,15 @@
+{
+  "name": "madinah-user-frontend-next",
+  "description": "Madinah User Frontend Next.js Application",
+  "env": {
+    "NPM_CONFIG_OMIT": {
+      "value": "optional",
+      "description": "Omit optional dependencies to prevent fsevents build failures on Linux"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}

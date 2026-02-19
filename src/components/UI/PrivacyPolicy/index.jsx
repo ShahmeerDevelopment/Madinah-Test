@@ -1,0 +1,223 @@
+"use client";
+
+import React, { useEffect } from "react";
+import StackComponent from "@/components/atoms/StackComponent";
+import CampaignHeading from "@/components/atoms/createCampaigns/CampaignHeading";
+import { theme } from "@/config/customTheme";
+import SubHeading1 from "@/components/atoms/createCampaigns/SubHeading1";
+import Paragraph from "@/components/atoms/createCampaigns/Paragraph";
+import SubHeading from "@/components/atoms/createCampaigns/SubHeading";
+import { getAllVisits } from "@/api/get-api-services";
+import { useSelector } from "react-redux";
+
+const PrivacyPolicyUI = () => {
+  const utmParameters = useSelector((state) => state.utmParameters);
+  useEffect(() => {
+    getAllVisits(
+      utmParameters.utmSource,
+      utmParameters.utmMedium,
+      utmParameters.utmCampaign,
+      utmParameters.utmTerm,
+      utmParameters.utmContent,
+      utmParameters.referral
+    );
+  }, []);
+  return (
+    <StackComponent
+      direction="column"
+      spacing={2}
+      sx={{ padding: { xs: 1, sm: 2 } }}
+    >
+      <CampaignHeading
+        align={"left"}
+        sx={{ color: theme.palette.primary.main, mb: "16px !important" }}
+      >
+        Privacy Policy
+      </CampaignHeading>
+      <SubHeading sx={{ mb: "-12px !important" }}>Introduction</SubHeading>
+      <Paragraph>
+        “Madinah.com” is committed to lawful, fair, and transparent collection
+        of your data. This policy governs data collection by us and our
+        affiliates (collectively the “Company”) when you purchase or use our
+        products, services, software, and website (collectively the “Services”).
+        It was drafted to help you understand the types of information we
+        collect from you, how we use it, as well as how we share, store and
+        protect it.
+      </Paragraph>
+      <Paragraph>
+        If you do not agree with this policy, you should not use our Services.
+        By accessing or using our Services, you agree to this policy, which may
+        change from time to time to better reflect our practices and applicable
+        laws. Your continued use after we make change(s) is deemed acceptance of
+        those changes.
+      </Paragraph>
+      <SubHeading sx={{ mb: "-12px !important" }}>
+        Children Under the Age of 13
+      </SubHeading>
+      <Paragraph>
+        Our Services are not intended for minors (children under 13 years of age
+        or equivalent depending on jurisdiction, (“Children”), and use of our
+        Services by Children is strictly prohibited. We do not knowingly collect
+        personally identifiable information from Children. If we learn we have
+        collected or received personal information from Children without
+        verification of parental consent, we will delete that information. If
+        you believe we might have any information from or about Children, please
+        contact us.
+      </Paragraph>
+      <SubHeading sx={{ mb: "-12px !important" }}>
+        Types of Information We Collect
+      </SubHeading>
+      <Paragraph>
+        We collect information if you voluntarily provide it to us. For example,
+        if you sign up for our Services, you might give us your name and email
+        address. You might also give us data when you email us or give us
+        feedback. In addition, you may submit information online through
+        surveys, forms, portals, or other interactive activities on our website.
+        details about transactions you carry out through our website. It is
+        always your choice whether or not to provide personal data. Do not
+        provide personal data unless you are authorized to do so.
+      </Paragraph>
+      <Paragraph>
+        We may collect the following information directly from you:<br></br>
+        –information that may be personally identified, such as name, address,
+        e-mail address, and other identifier by which you may be contacted
+        online or offline (“personal information”);<br></br>– information that
+        is about you but individually does not identify you; and/or <br></br>–
+        information about how you interact with our website, such as internet
+        connection or the equipment you use to access the Services.
+      </Paragraph>
+      <Paragraph>
+        This policy does not apply to third-party sites that may link to, or be
+        accessible from, our site. We do not control these third parties’
+        tracking technologies or how they may be used. Your interactions with
+        these sites are governed by the third parties’ applicable privacy
+        statements. If you have any questions about these sites, you should
+        contact the responsible provider directly.
+      </Paragraph>
+      <Paragraph>
+        We may also collect information automatically:<br></br>
+        As you interact with our website, we may use automatic data collection
+        technologies to collect certain information about your equipment,
+        browsing actions, and patterns, including: details of your visits to our
+        website and information about your computer and internet connection. The
+        information we collect automatically does not include personal
+        information.
+      </Paragraph>
+      <Paragraph>
+        The technologies we use for this automatic data collection may include
+        cookies. You may refuse to accept browser cookies by activating the
+        appropriate setting on your browser, but if you do you may be unable to
+        access certain parts of our website. Unless you have adjusted your
+        browser setting so that it will refuse cookies, our system will issue
+        cookies when you direct your browser to us.
+      </Paragraph>
+      <SubHeading sx={{ mb: "-12px !important" }}>
+        How We Use Your Information
+      </SubHeading>
+      <Paragraph>
+        We use information that we collect about you or that you provide to us,
+        including personal information to present our Services to you; to
+        provide you with information, products, or services that you request
+        from us; to fulfill any other purpose for which you provide it; to
+        provide you with notices about your account/ subscription, including
+        expiration and renewal notices; to carry out our obligations and enforce
+        our rights arising from any contracts entered into between you and us,
+        including for billing and collection; to comply with legal obligations;
+        or for any other purpose with your consent.
+      </Paragraph>
+      <Paragraph>
+        If you are an EU resident, we will collect and use your personal data
+        only if we have one or more legal bases for doing so under the GDPR.
+        This means we collect and use your personal data only where you have
+        given your consent for one or more specific purposes; it is necessary
+        for our legitimate interests (or those of a third party) and your
+        interests and fundamental rights do not override those interests; it is
+        necessary to protect the vital interests of you or another natural
+        person; or it is necessary to comply with a legal obligation.
+      </Paragraph>
+      <SubHeading sx={{ mb: "-12px !important" }}>
+        SMS Communication & Data Privacy
+      </SubHeading>
+      <Paragraph>
+        By providing your phone number, you consent to receive SMS messages from
+        Madinah. Message and data rates may apply. Message frequency varies. You
+        can opt out anytime by replying STOP.
+      </Paragraph>
+      <Paragraph>
+        We do not share your mobile information with third parties or affiliates
+        for marketing/promotional purposes. Your mobile number may be shared
+        with subcontractors for essential support services (such as customer
+        service).
+      </Paragraph>
+      <SubHeading sx={{ mb: "-12px !important" }}>
+        Who We Share Your Information With
+      </SubHeading>
+      <Paragraph>
+        We may disclose aggregated information about our users, and information
+        that does not identify any individual, without restriction.
+      </Paragraph>
+      <Paragraph>
+        We may disclose personal information that we collect or you provide as
+        described in this policy to our team members, agents, subsidiaries and
+        affiliates who have a business need to know; to contractors, service
+        providers, and other third parties we use to support our business; to a
+        buyer or other successor in the event of a merger, divestiture,
+        restructuring, reorganization, dissolution, or other sale or transfer of
+        some or all of the Company’s assets; to fulfill the purpose for which
+        you provide it; for any other purpose disclosed by us when you provide
+        the information; and/or with your cons
+      </Paragraph>
+      <Paragraph>
+        We may also disclose your personal information: to comply with any court
+        order, law, or legal process, including to respond to any government or
+        regulatory request; and/or to enforce or apply our terms of use and
+        other agreements, including for billing and collection purposes.
+      </Paragraph>
+      <Paragraph>
+        If we believe disclosure is necessary or appropriate to protect the
+        rights, property, or safety of the Company, our customers, or others
+      </Paragraph>
+      <SubHeading sx={{ mb: "-12px !important" }}>
+        How We Protect Your Personal Information
+      </SubHeading>
+      <Paragraph>
+        We may store your personal data in any region or in any country where we
+        or our service providers have facilities. We implement reasonable
+        processes and adhere to best practices in order to protect your Personal
+        Information from accidental loss and from unauthorized access, use,
+        alteration, and disclosure. Unfortunately, the transmission of
+        information via the internet is not completely secure. We will do our
+        best to protect your personal information, but we cannot guarantee the
+        security of your personal information transmitted to our website. Any
+        transmission of personal information is at your own risk. We are not
+        responsible for circumvention of any privacy settings or security
+        measures contained on the website. We will store your personal data only
+        until it is no longer needed to fulfill the purpose(s) for which it was
+        collected or as required or permitted by law; at that point it will be
+        anonymized, deleted, or isolate
+      </Paragraph>
+      <SubHeading sx={{ mb: "-12px !important" }}>
+        Accessing and Correcting Your Information
+      </SubHeading>
+      <Paragraph>
+        You can request to access, correct or delete any personal information
+        that you have provided to us by contacting us at support@madinah.com. We
+        may not accommodate a request to change information if we believe the
+        change would violate any law or legal requirement or cause the
+        information to be incorrect.
+      </Paragraph>
+      <SubHeading sx={{ mb: "-12px !important" }}>How to Contact Us</SubHeading>
+      <Paragraph>
+        To ask questions or comment about this privacy policy and our privacy
+        practices, contact us at:
+      </Paragraph>
+      <SubHeading1 sx={{ mb: "-12px !important" }}>Madinah</SubHeading1>
+      <Paragraph>
+        155 Commerce Valley Drive E, Markham Ontario, Canada L3T 7X6 <br></br>
+        support@madinah.com<br></br> madinah.com
+      </Paragraph>
+    </StackComponent>
+  );
+};
+
+export default PrivacyPolicyUI;

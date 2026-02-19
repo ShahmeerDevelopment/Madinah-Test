@@ -1,0 +1,18 @@
+.pie-chart-reusable .apexcharts-legend-text {
+  color: #a1a1a8 !important;
+  font-family: "League Spartan", sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  letter-spacing: -0.41px !important;
+  line-height: 16px !important;
+}
+
+.pie-chart-reusable .apexcharts-legend-series {
+  display: flex;
+  align-items: center;
+}
+
+.pie-chart-reusable .apexcharts-legend {
+  gap: 8px;
+  top: 0px !important;
+}

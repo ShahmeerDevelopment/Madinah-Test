@@ -1,0 +1,36 @@
+.googlePayButtonContainer {
+    width: 100%;
+}
+
+.googlePayButtonContainer>div,
+.googlePayButtonContainer>div>button {
+    width: 100% !important;
+    /* Ensure full width */
+    border-radius: 48px !important;
+    /* Attempt to apply border radius */
+    min-width: 170px !important;
+}
+
+.googlePayButtonContainerNew>div,
+.googlePayButtonContainerNew>div>button {
+    width: 100% !important;
+    /* Ensure full width */
+    border-radius: 5px !important;
+    /* Attempt to apply border radius */
+    min-width: 170px !important;
+}
+
+@media (min-width: 768px) {
+    .googlePayButtonContainer {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: flex-end;
+    }
+
+    .googlePayButtonContainer>div,
+    .googlePayButtonContainer>div>button {
+        width: 135px !important;
+        /* Set width to auto or a fixed width for desktop */
+        /* If you want a specific width on desktop, replace 'auto' with that width. */
+    }
+}
