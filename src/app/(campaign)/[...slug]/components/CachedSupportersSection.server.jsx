@@ -18,7 +18,7 @@ import StackComponent from "@/components/atoms/StackComponent";
 import TypographyComp from "@/components/atoms/typography/TypographyComp";
 import WhiteBackgroundSection from "@/components/advance/WhiteBackgroundSection";
 import SafeImage from "@/components/atoms/SafeImage";
-import { formatTimestamp } from "@/utils/helpers";
+import { formatDate } from "@/utils/helpers";
 
 // Client component for interactive elements (See All button with pagination)
 import CampaignSupportersInteractive from "./CampaignSupportersInteractive.client";
@@ -149,7 +149,7 @@ export default async function CachedSupportersSection({
                 >
                   {eachSupporter.currencySymbol}
                   {eachSupporter.amount} {eachSupporter.currency},{" "}
-                  {formatTimestamp(eachSupporter.createdAt)}
+                  {formatDate(eachSupporter.createdAt)}
                 </TypographyComp>
               </StackComponent>
             </StackComponent>

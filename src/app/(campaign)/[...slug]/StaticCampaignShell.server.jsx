@@ -12,7 +12,7 @@ import { notFound } from "next/navigation";
 import {
   getStaticCampaignDataCached,
 } from "./campaign-cache.server";
-import { formatTimestamp } from "@/utils/helpers";
+// import { formatTimestamp } from "@/utils/helpers";
 import { DEFAULT_AVATAR, RANDOM_URL } from "@/config/constant";
 
 import CampaignLeftSide from "./components/CampaignLeftSide.server";
@@ -29,8 +29,7 @@ function transformCampaignData(campaignDetails, slugPath) {
     status,
   } = campaignDetails;
 
-  const whenPublished =
-    updatedAt || createdAt ? formatTimestamp(updatedAt || createdAt) : "";
+  const whenPublished = updatedAt || createdAt ? updatedAt || createdAt : "";
   const coverMedia = coverImageUrl || videoLinks[0]?.url || "";
   const campaignStatus =
     status === "pending-approval"

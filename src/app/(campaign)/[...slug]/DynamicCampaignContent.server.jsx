@@ -19,7 +19,7 @@ import {
   getCampaignDataCachedStats,
   getStaticCampaignDataCached,
 } from "./campaign-cache.server";
-import { formatTimestamp } from "@/utils/helpers";
+// import { formatTimestamp } from "@/utils/helpers";
 import { DEFAULT_AVATAR, RANDOM_URL } from "@/config/constant";
 
 import CampaignRightSideServer from "./components/CampaignRightSide.server";
@@ -62,8 +62,7 @@ function transformCampaignData(
     coverImageUrl,
   } = campaignDetails;
 
-  const whenPublished =
-    updatedAt || createdAt ? formatTimestamp(updatedAt || createdAt) : "";
+  const whenPublished = updatedAt || createdAt ? updatedAt || createdAt : "";
   const coverMedia = coverImageUrl || videoLinks[0]?.url || "";
   const campaignStatus =
     campaignDetailsStats.status === "pending-approval"

@@ -29,7 +29,7 @@ import {
   getSupportersCached,
 } from "./campaign-cache.server";
 
-import { formatTimestamp } from "@/utils/helpers";
+// import { formatTimestamp } from "@/utils/helpers";
 import { DEFAULT_AVATAR, RANDOM_URL } from "@/config/constant";
 
 // Import server and client components
@@ -133,8 +133,7 @@ export default async function CampaignContent({ params, searchParams, token }) {
     status,
   } = campaignDetails;
 
-  const whenPublished =
-    updatedAt || createdAt ? formatTimestamp(updatedAt || createdAt) : "";
+  const whenPublished = updatedAt || createdAt ? updatedAt || createdAt : "";
 
   const coverMedia = coverImageUrl || videoLinks[0]?.url || "";
 
