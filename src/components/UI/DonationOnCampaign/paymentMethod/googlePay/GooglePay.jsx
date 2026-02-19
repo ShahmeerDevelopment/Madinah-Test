@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { calculateTotalAmount } from "@/utils/helpers";
-import styles from "./googlePay.module.css";
+// import styles from "./googlePay.module.css";
 import toast from "react-hot-toast";
 import { getCookie } from "cookies-next";
 import { useRecurlyReady } from "@/hooks/useRecurlyReady";
@@ -139,8 +139,8 @@ const GooglePay = ({
       id="google-pay-button-container"
       className={
         experimentalCookie === "donation_version_1"
-          ? styles.googlePayButtonContainerNew
-          : styles.googlePayButtonContainerNew
+          ? "gpay-button-container-new"
+          : "gpay-button-container-new"
       }
     >
       {!isRecurlyReady && (

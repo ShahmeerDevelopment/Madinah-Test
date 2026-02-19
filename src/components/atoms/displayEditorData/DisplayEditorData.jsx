@@ -42,13 +42,48 @@ const DisplayEditorData = ({ isStory = false, content }) => {
       .replace(/\\\\/g, '\\');
 
     // Parse HTML and replace img tags with Next.js Image components
-    const parser = typeof window !== "undefined" ? new DOMParser() : null;
+    if (typeof window === "undefined") {
+      // Server-side: Use regex to extract image info since DOMParser is not available
+      const imgRegex = /<img[^>]+src="([^">]+)"([^>]*)>/g;
+      const images = [];
+      let match;
+      let index = 0;
+      let htmlWithPlaceholders = unescapedContent;
 
-    if (!parser) {
-      // Server-side: return content as-is
-      return unescapedContent;
+      while ((match = imgRegex.exec(unescapedContent)) !== null) {
+        const fullTag = match[0];
+        const src = match[1];
+        const attributes = match[2];
+
+        const altMatch = attributes.match(/alt="([^">]*)"/);
+        const widthMatch = attributes.match(/width="([^">]*)"/);
+        const heightMatch = attributes.match(/height="([^">]*)"/);
+        const classMatch = attributes.match(/class="([^">]*)"/);
+
+        const placeholder = `__IMAGE_PLACEHOLDER_${index}__`;
+        htmlWithPlaceholders = htmlWithPlaceholders.replace(fullTag, placeholder);
+
+        images.push({
+          placeholder,
+          src,
+          alt: altMatch ? altMatch[1] : "",
+          width: widthMatch ? parseInt(widthMatch[1], 10) : 800,
+          height: heightMatch ? parseInt(heightMatch[1], 10) : 600,
+          className: classMatch ? classMatch[1] : "",
+          priority: index === 0,
+          index,
+        });
+        index++;
+      }
+
+      return {
+        html: htmlWithPlaceholders,
+        images,
+      };
     }
 
+    // Client-side: Use DOMParser as before
+    const parser = new DOMParser();
     const doc = parser.parseFromString(unescapedContent, "text/html");
     const imgElements = doc.querySelectorAll("img");
 
@@ -172,6 +207,7 @@ const DisplayEditorData = ({ isStory = false, content }) => {
       <div
         ref={contentRef}
         style={{
+          minHeight: isStory && isSmallScreen && showReadMore ? "400px" : "auto",
           maxHeight:
             isStory && isSmallScreen && showReadMore && !isExpanded
               ? "400px"
