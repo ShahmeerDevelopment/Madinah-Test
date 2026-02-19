@@ -7,7 +7,7 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import BoxComponent from "@/components/atoms/boxComponent/BoxComponent";
-import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import { ClickAwayListener } from "@mui/material";
 import CalenderButton from "@/components/molecules/calenderButton/CalenderButton";
 import { startOfMonth } from "date-fns";
 
