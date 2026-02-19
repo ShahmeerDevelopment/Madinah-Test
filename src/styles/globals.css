@@ -556,3 +556,221 @@ apple-pay-button {
 	max-width: 100%;
 	height: auto;
 }
+
+/* ========================================
+   SKELETON & CAROUSEL UTILITIES (PHASE 7)
+   Relocated from module CSS to reduce chaining
+   ======================================== */
+
+.ppr-skeleton-container {
+	width: 100%;
+	position: relative;
+	transform: translateY(-140px);
+	margin-bottom: -140px;
+	display: flex;
+	flex-direction: column;
+	gap: 56px;
+}
+
+@media (max-width: 600px) {
+	.ppr-skeleton-container {
+		transform: none !important;
+		margin-bottom: 0 !important;
+	}
+}
+
+.ppr-skeleton-section {
+	height: max-content;
+	z-index: 1;
+	box-shadow: 0px 0px 100px 0px rgba(0, 0, 0, 0.06);
+	border-radius: 40px;
+	background-color: #ffffff;
+	padding: 32px;
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+}
+
+@media (max-width: 600px) {
+	.ppr-skeleton-section {
+		padding: 16px !important;
+	}
+}
+
+.ppr-skeleton-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+}
+
+.ppr-skeleton-element {
+	background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+	background-size: 200px 100%;
+	animation: shimmer 1.5s infinite;
+	border-radius: 8px;
+}
+
+.ppr-skeleton-heading {
+	width: 200px;
+	height: 36px;
+}
+
+.ppr-skeleton-arrows {
+	width: 80px;
+	height: 32px;
+	border-radius: 16px;
+}
+
+.ppr-skeleton-grid-5 {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 16px;
+}
+
+@media (max-width: 1200px) {
+	.ppr-skeleton-grid-5 {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media (max-width: 768px) {
+	.ppr-skeleton-grid-5 {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 480px) {
+	.ppr-skeleton-grid-5 {
+		grid-template-columns: 1fr;
+	}
+}
+
+.ppr-skeleton-card {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	border-radius: 12px;
+	overflow: hidden;
+}
+
+.ppr-skeleton-image {
+	width: 100%;
+	height: 180px;
+	border-radius: 12px;
+}
+
+.ppr-skeleton-card-content {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 8px;
+}
+
+.ppr-skeleton-title {
+	width: 100%;
+	height: 20px;
+	border-radius: 4px;
+}
+
+.ppr-skeleton-subtitle {
+	width: 70%;
+	height: 16px;
+	border-radius: 4px;
+}
+
+.ppr-skeleton-progress {
+	width: 100%;
+	height: 8px;
+	border-radius: 4px;
+}
+
+.ppr-skeleton-voices {
+	display: flex;
+	gap: 16px;
+	overflow: hidden;
+}
+
+.ppr-skeleton-voice-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	min-width: 100px;
+}
+
+.ppr-skeleton-avatar {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+}
+
+.ppr-skeleton-name {
+	width: 60px;
+	height: 14px;
+	border-radius: 4px;
+}
+
+.ppr-skeleton-text {
+	width: 100%;
+	height: 60px;
+	border-radius: 8px;
+}
+
+.ppr-skeleton-map {
+	width: 100%;
+	height: 430px;
+	border-radius: 12px;
+}
+
+.ppr-skeleton-grid-3 {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 24px;
+}
+
+@media (max-width: 768px) {
+	.ppr-skeleton-grid-3 {
+		grid-template-columns: 1fr;
+	}
+}
+
+.ppr-skeleton-recent-card {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.ppr-skeleton-recent-image {
+	width: 100%;
+	height: 200px;
+	border-radius: 12px;
+}
+
+.ppr-skeleton-recent-title {
+	width: 80%;
+	height: 24px;
+	border-radius: 4px;
+}
+
+/* Carousel Global Utility (from carousel/style.module.css) */
+.u-carousel-slide {
+	transition: transform 0.5s ease, opacity 0.5s ease !important;
+	transform-origin: center center !important;
+	opacity: 0.75 !important;
+	transform: scale(0.5) !important;
+}
+
+.u-carousel-slide-active {
+	opacity: 1 !important;
+	transform: scale(1) !important;
+}
+
+.u-carousel-item-fixed {
+	max-width: 180px;
+	min-width: 180px;
+}
+
+.u-carousel-full-width {
+	width: 100%;
+}

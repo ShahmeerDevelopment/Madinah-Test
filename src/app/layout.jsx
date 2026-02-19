@@ -52,6 +52,19 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        {/* Inline Critical CSS to break critical request chains and reduce Discovery Latency */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+          *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-league-spartan), Arial, sans-serif; }
+          .root { position: relative; min-height: 100vh; min-width: 100vw; }
+          body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; box-sizing: border-box; overflow-x: hidden; padding-right: 0 !important; }
+          .ppr-skeleton-container { width: 100%; position: relative; transform: translateY(-140px); margin-bottom: -140px; display: flex; flex-direction: column; gap: 56px; }
+          .ppr-skeleton-section { height: max-content; z-index: 1; box-shadow: 0px 0px 100px 0px rgba(0, 0, 0, 0.06); border-radius: 40px; background-color: #ffffff; padding: 32px; display: flex; flex-direction: column; gap: 32px; }
+          @media (max-width: 600px) { .ppr-skeleton-container { transform: none !important; margin-bottom: 0 !important; } .ppr-skeleton-section { padding: 16px !important; } }
+          .ppr-skeleton-element { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200px 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
+          @keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
+        `}} />
+
         {/* DNS prefetch for external domains - lower priority than LCP images */}
         <link rel="dns-prefetch" href="https://madinah.s3.us-east-2.amazonaws.com" />
         <link rel="dns-prefetch" href="https://i.ibb.co" />

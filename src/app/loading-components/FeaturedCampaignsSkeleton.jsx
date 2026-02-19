@@ -2,25 +2,24 @@
  * Skeleton loading component for Featured Campaigns section
  * Displayed during PPR streaming while dynamic content loads
  */
-import styles from "./skeleton.module.css";
 
 export default function FeaturedCampaignsSkeleton() {
   return (
-    <div className={styles.container}>
+    <div className="ppr-skeleton-container">
       {/* Featured Campaigns Section Skeleton */}
-      <section className={styles.section}>
-        <div className={styles.sectionHeader}>
-          <div className={styles.headingSkeleton} />
-          <div className={styles.arrowsSkeleton} />
+      <section className="ppr-skeleton-section">
+        <div className="ppr-skeleton-header">
+          <div className="ppr-skeleton-element ppr-skeleton-heading" />
+          <div className="ppr-skeleton-element ppr-skeleton-arrows" />
         </div>
-        <div className={styles.campaignsGrid}>
+        <div className="ppr-skeleton-grid-5">
           {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className={styles.campaignCard}>
-              <div className={styles.imageSkeleton} />
-              <div className={styles.cardContent}>
-                <div className={styles.titleSkeleton} />
-                <div className={styles.subtitleSkeleton} />
-                <div className={styles.progressSkeleton} />
+            <div key={i} className="ppr-skeleton-card">
+              <div className="ppr-skeleton-element ppr-skeleton-image" />
+              <div className="ppr-skeleton-card-content">
+                <div className="ppr-skeleton-element ppr-skeleton-title" />
+                <div className="ppr-skeleton-element ppr-skeleton-subtitle" />
+                <div className="ppr-skeleton-element ppr-skeleton-progress" />
               </div>
             </div>
           ))}
@@ -28,33 +27,33 @@ export default function FeaturedCampaignsSkeleton() {
       </section>
 
       {/* Voices of Madinah Skeleton */}
-      <section className={styles.section}>
-        <div className={styles.headingSkeleton} />
-        <div className={styles.voicesGrid}>
+      <section className="ppr-skeleton-section">
+        <div className="ppr-skeleton-element ppr-skeleton-heading" />
+        <div className="ppr-skeleton-voices">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className={styles.voiceCard}>
-              <div className={styles.avatarSkeleton} />
-              <div className={styles.nameSkeleton} />
+            <div key={i} className="ppr-skeleton-voice-card">
+              <div className="ppr-skeleton-element ppr-skeleton-avatar" />
+              <div className="ppr-skeleton-element ppr-skeleton-name" />
             </div>
           ))}
         </div>
       </section>
 
       {/* Help Happens Here - Static (will be replaced) */}
-      <section className={styles.section}>
-        <div className={styles.headingSkeleton} />
-        <div className={styles.textSkeleton} />
-        <div className={styles.mapSkeleton} />
+      <section className="ppr-skeleton-section">
+        <div className="ppr-skeleton-element ppr-skeleton-heading" />
+        <div className="ppr-skeleton-element ppr-skeleton-text" />
+        <div className="ppr-skeleton-element ppr-skeleton-map" />
       </section>
 
       {/* Recent Campaigns Skeleton */}
-      <section className={styles.section}>
-        <div className={styles.headingSkeleton} />
-        <div className={styles.recentGrid}>
+      <section className="ppr-skeleton-section">
+        <div className="ppr-skeleton-element ppr-skeleton-heading" />
+        <div className="ppr-skeleton-grid-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className={styles.recentCard}>
-              <div className={styles.recentImageSkeleton} />
-              <div className={styles.recentTitleSkeleton} />
+            <div key={i} className="ppr-skeleton-recent-card">
+              <div className="ppr-skeleton-element ppr-skeleton-recent-image" />
+              <div className="ppr-skeleton-element ppr-skeleton-recent-title" />
             </div>
           ))}
         </div>

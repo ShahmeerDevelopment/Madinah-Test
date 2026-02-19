@@ -6,7 +6,6 @@ import "react-multi-carousel/lib/styles.css";
 import PropTypes from "prop-types";
 // import useResponsiveScreen from "@/hooks/useResponsiveScreen";
 
-import styles from "./style.module.css";
 
 const MultiCarousel = ({ children }) => {
   //   const { isGreaterThan } = useResponsiveScreen(370);
@@ -40,12 +39,12 @@ const MultiCarousel = ({ children }) => {
         arrows={false}
         centerMode={false}
         // className=""
-        containerClass={styles.container}
+        containerClass="u-carousel-full-width"
         // dotListClass=""
         // draggable
         // focusOnSelect={false}
         infinite={false}
-        itemClass={styles.carouselItem}
+        itemClass="u-carousel-item-fixed"
         // minimumTouchDrag={80}
         partialVisible
         // rewind={false}

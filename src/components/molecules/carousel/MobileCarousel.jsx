@@ -6,7 +6,6 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import PropTypes from "prop-types";
-import styles from "./style.module.css";
 
 import { FreeMode } from "swiper/modules";
 
@@ -62,7 +61,7 @@ const MobileCarousel = ({
       >
         {React.Children.map(children, (child) => (
           <SwiperSlide
-            className={`${styles.carouselSlide} carousel-slide`}
+            className={"u-carousel-slide carousel-slide"}
             style={{ "--slide-width": `${slideWidth}px` }}
           >
             {child}
