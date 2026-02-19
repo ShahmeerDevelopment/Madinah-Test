@@ -19,6 +19,7 @@ import StackComponent from "@/components/atoms/StackComponent";
 import TypographyComp from "@/components/atoms/typography/TypographyComp";
 import WhiteBackgroundSection from "@/components/advance/WhiteBackgroundSection";
 import { themeColors } from "@/config/themeColors";
+import { processAndOptimizeStory } from "@/utils/processStoryHtml";
 
 // Client component for interactive elements (View All button)
 import CampaignUpdatesInteractive from "./CampaignUpdatesInteractive.client";
@@ -93,7 +94,7 @@ export default async function CachedUpdatesSection({
 
   // Use campaignContent cache profile (1 day cache)
   cacheLife("campaignContent");
-  
+
   // Tag for on-demand revalidation when updates are added/edited
   cacheTag(`campaign-updates-${campaignId}`);
   cacheTag(`campaign-${campaignId}`);
@@ -119,8 +120,10 @@ export default async function CachedUpdatesSection({
           />
         </TypographyComp>
 
-        {announcements.map((item, index) => {
+        {announcements.slice(0, 2).map((item, index) => {
           const truncatedBody = truncateHTML(item.body);
+          // Phase 3: Optimize images in update announcements
+          const optimizedBody = processAndOptimizeStory(truncatedBody);
 
           return (
             <BoxComponent key={index} sx={{ marginBottom: "20px !important" }}>
@@ -177,7 +180,7 @@ export default async function CachedUpdatesSection({
                   }}
                 >
                   <div
-                    dangerouslySetInnerHTML={{ __html: truncatedBody }}
+                    dangerouslySetInnerHTML={{ __html: optimizedBody }}
                     style={{
                       fontSize: "16px",
                       lineHeight: "24px",

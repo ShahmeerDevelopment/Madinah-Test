@@ -480,8 +480,10 @@ function StaticUpdatesSection({
           />
         </TypographyComp>
 
-        {announcements.map((item, index) => {
+        {announcements.slice(0, 2).map((item, index) => {
           const truncatedBody = truncateHTML(item.body);
+          // Phase 3: Optimize images in update announcements
+          const optimizedBody = processAndOptimizeStory(truncatedBody);
 
           return (
             <BoxComponent key={index} sx={{ marginBottom: "20px !important" }}>
@@ -538,7 +540,7 @@ function StaticUpdatesSection({
                   }}
                 >
                   <div
-                    dangerouslySetInnerHTML={{ __html: truncatedBody }}
+                    dangerouslySetInnerHTML={{ __html: optimizedBody }}
                     style={{
                       fontSize: "16px",
                       lineHeight: "24px",

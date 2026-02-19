@@ -49,9 +49,10 @@ export function optimizeStoryImages(html) {
     if (src.startsWith("/_next/image") || src.startsWith("data:")) return match;
 
     // Use Next.js image proxy
-    // Width 1080 is sufficient for the story column (max ~750px + retina)
-    const optimizedSrc = `/_next/image?url=${encodeURIComponent(src)}&w=1080&q=75`;
-    
+    // Width 800 is sufficient for the story column (most screens are ~750px wide)
+    // This improves Speed Index by serving smaller files.
+    const optimizedSrc = `/_next/image?url=${encodeURIComponent(src)}&w=800&q=75`;
+
     // Add loading="lazy" if not present
     let attrs = before + after;
     if (!attrs.includes("loading=")) attrs += ' loading="lazy"';
