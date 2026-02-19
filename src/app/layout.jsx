@@ -52,12 +52,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* Critical preconnects only (max 4) - for LCP optimization */}
-        <link
-          rel="preconnect"
-          href="https://madinah.s3.us-east-2.amazonaws.com"
-        />
-        {/* DNS prefetch for other domains - lower priority */}
+        {/* DNS prefetch for external domains - lower priority than LCP images */}
+        <link rel="dns-prefetch" href="https://madinah.s3.us-east-2.amazonaws.com" />
         <link rel="dns-prefetch" href="https://i.ibb.co" />
         <link rel="dns-prefetch" href="https://madinah.s3.amazonaws.com" />
         <link
@@ -71,7 +67,7 @@ export default function RootLayout({ children }) {
         {/* Note: LCP image preload handled automatically by Next.js Image with priority prop */}
       </head>
       <body
-        className={`${leagueSpartan.variable} ${notoSansArabic.variable}`}
+        className={`${leagueSpartan.variable}`}
         suppressHydrationWarning
       >
         {/* Google Tag Manager (noscript) */}

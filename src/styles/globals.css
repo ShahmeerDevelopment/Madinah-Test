@@ -116,7 +116,19 @@ apple-pay-button {
 	font-size: 16px;
 	line-height: 21.6px;
 	letter-spacing: -0.41px;
-	font-family: var(--font-league-spartan), var(--font-noto-sans-arabic), Arial, sans-serif;
+	font-family: var(--font-league-spartan), Arial, sans-serif;
+}
+
+/* 
+ * Apply Arabic font only when explicitly needed or on RTL content 
+ * This breaks the critical request chain for the large Arabic font on English pages
+ */
+[dir="rtl"], .arabic-text, [lang="ar"] {
+	font-family: var(--font-noto-sans-arabic), Arial, sans-serif !important;
+}
+
+.ql-editor[dir="rtl"], .ql-editor.arabic-text {
+	font-family: var(--font-noto-sans-arabic), Arial, sans-serif;
 }
 
 .ql-editor.ql-blank::before {
