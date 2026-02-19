@@ -31,11 +31,8 @@ body {
 	/* overflow-x: hidden; */
 }
 
-html {
-	/* overflow-x: hidden; */
-	/* Prevent scrollbar from causing layout shifts */
-	/* overflow-y: scroll; */
-}
+
+/* Prevent layout shift from scrollbar appearance - moved to body */
 
 body {
 	/* Prevent layout shift from scrollbar appearance */
@@ -123,11 +120,14 @@ apple-pay-button {
  * Apply Arabic font only when explicitly needed or on RTL content 
  * This breaks the critical request chain for the large Arabic font on English pages
  */
-[dir="rtl"], .arabic-text, [lang="ar"] {
+[dir="rtl"],
+.arabic-text,
+[lang="ar"] {
 	font-family: var(--font-noto-sans-arabic), Arial, sans-serif !important;
 }
 
-.ql-editor[dir="rtl"], .ql-editor.arabic-text {
+.ql-editor[dir="rtl"],
+.ql-editor.arabic-text {
 	font-family: var(--font-noto-sans-arabic), Arial, sans-serif;
 }
 
@@ -340,15 +340,7 @@ apple-pay-button {
 	animation: shimmer 1.5s infinite ease-in-out;
 }
 
-@keyframes shimmer {
-	0% {
-		background-position: 200% 0;
-	}
-
-	100% {
-		background-position: -200% 0;
-	}
-}
+/* Animations moved to animations.css to reduce critical path CSS */
 
 /* Featured cards grid - responsive */
 .featured-cards-grid {

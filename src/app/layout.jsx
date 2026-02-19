@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import "@/styles/animations.css";
 import localFont from "next/font/local";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import ClientScripts from "./ClientScripts";

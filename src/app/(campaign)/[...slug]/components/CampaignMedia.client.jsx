@@ -103,7 +103,7 @@ export default function CampaignMedia({
 
   // Only use error state - minimize state for faster hydration
   const [hasError, setHasError] = useState(false);
-  // Video player loading state - only matters for videos
+  // Video player loading state - only load when user interacts
   const [shouldLoadVideoPlayer, setShouldLoadVideoPlayer] = useState(false);
 
   // Return null only if no valid image source exists
@@ -121,27 +121,9 @@ export default function CampaignMedia({
     }
   }, [hasError]);
 
-  useEffect(() => {
-    if (!isVideo) return;
-
-    // Defer heavy video player JS to reduce TBT and protect LCP.
-    // Show a poster image first; load the player when the browser is idle.
-    const timeoutId = setTimeout(() => {
-      if (typeof window === "undefined") return;
-
-      if ("requestIdleCallback" in window) {
-        const idleId = window.requestIdleCallback(
-          () => setShouldLoadVideoPlayer(true),
-          { timeout: 1500 }
-        );
-        return () => window.cancelIdleCallback?.(idleId);
-      }
-
-      setShouldLoadVideoPlayer(true);
-    }, 150);
-
-    return () => clearTimeout(timeoutId);
-  }, [isVideo]);
+  const handlePlayClick = () => {
+    setShouldLoadVideoPlayer(true);
+  };
 
   const posterSrc = useMemo(() => {
     if (getValidUrl(thumbnailCoverImageUrl)) return thumbnailCoverImageUrl;
@@ -178,7 +160,10 @@ export default function CampaignMedia({
   return (
     <BoxComponent sx={styles.coverImg}>
       {isVideo ? (
-        <BoxComponent sx={styles.mediaContainer}>
+        <BoxComponent
+          sx={{ ...styles.mediaContainer, cursor: !shouldLoadVideoPlayer ? "pointer" : "default" }}
+          onClick={!shouldLoadVideoPlayer ? handlePlayClick : undefined}
+        >
           <NextImage
             src={posterSrc}
             alt="campaign-cover-video-poster"
@@ -187,6 +172,7 @@ export default function CampaignMedia({
             style={{
               borderRadius: "12px",
               objectFit: "cover",
+              visibility: shouldLoadVideoPlayer ? "hidden" : "visible",
             }}
             onError={handleImageError}
             priority={true}
@@ -194,11 +180,49 @@ export default function CampaignMedia({
             loading="eager"
           />
 
+          {!shouldLoadVideoPlayer && (
+            <BoxComponent
+              sx={{
+                position: "absolute",
+                inset: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "rgba(0,0,0,0.2)",
+                transition: "background 0.3s",
+                "&:hover": { background: "rgba(0,0,0,0.4)" },
+              }}
+            >
+              <BoxComponent
+                sx={{
+                  width: "80px",
+                  height: "80px",
+                  borderRadius: "50%",
+                  background: "rgba(255,255,255,0.9)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+                }}
+              >
+                <div style={{
+                  width: 0,
+                  height: 0,
+                  borderTop: "15px solid transparent",
+                  borderBottom: "15px solid transparent",
+                  borderLeft: "25px solid #000",
+                  marginLeft: "8px"
+                }} />
+              </BoxComponent>
+            </BoxComponent>
+          )}
+
           {shouldLoadVideoPlayer && (
             <BoxComponent sx={{ position: "absolute", inset: 0 }}>
-              <Suspense fallback={null}>
+              <Suspense fallback={<MediaSkeleton />}>
                 <VideoPlayerComponent
                   url={lcpImageSrc}
+                  playing={true}
                   style={{
                     borderRadius: "12px",
                     overflow: "hidden",
