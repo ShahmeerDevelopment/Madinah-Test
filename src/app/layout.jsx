@@ -57,11 +57,6 @@ export default function RootLayout({ children }) {
           rel="preconnect"
           href="https://madinah.s3.us-east-2.amazonaws.com"
         />
-        {/* <link
-          rel="preconnect"
-          href="https://cdn.growthbook.io"
-          crossOrigin="anonymous"
-        /> */}
         {/* DNS prefetch for other domains - lower priority */}
         <link rel="dns-prefetch" href="https://i.ibb.co" />
         <link rel="dns-prefetch" href="https://madinah.s3.amazonaws.com" />
@@ -71,8 +66,8 @@ export default function RootLayout({ children }) {
         />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://connect.facebook.net" />
-        {/* <link rel="dns-prefetch" href="https://www.clarity.ms" /> */}
         <link rel="dns-prefetch" href="https://js.recurly.com" />
+        <link rel="dns-prefetch" href="https://cdn.growthbook.io" />
         {/* Note: LCP image preload handled automatically by Next.js Image with priority prop */}
       </head>
       <body

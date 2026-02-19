@@ -42,17 +42,11 @@ export const useCriticalImagePreload = () => {
     ];
 
     domains.forEach((domain) => {
-      // DNS prefetch
+      // DNS prefetch is lighter weight than preconnect for non-LCP domains
       const dnsLink = document.createElement("link");
       dnsLink.rel = "dns-prefetch";
       dnsLink.href = domain;
       document.head.appendChild(dnsLink);
-
-      // Preconnect
-      const preconnectLink = document.createElement("link");
-      preconnectLink.rel = "preconnect";
-      preconnectLink.href = domain;
-      document.head.appendChild(preconnectLink);
     });
   }, []);
 

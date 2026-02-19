@@ -216,7 +216,7 @@ export default function CampaignMedia({
             src={displaySrc}
             alt="campaign-cover-photo"
             fill
-            sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 66vw, 740px"
+            sizes="(max-width: 480px) 100vw, (max-width: 768px) 100vw, (max-width: 1200px) 66vw, 840px"
             style={{
               borderRadius: "12px",
               objectFit: "cover",

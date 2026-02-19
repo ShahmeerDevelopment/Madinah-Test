@@ -68,15 +68,15 @@ export default async function CachedSupportersSection({
   randomToken,
   isSmallScreen = false,
 }) {
-  // "use cache";
+  "use cache";
 
   // Use supporters cache profile (30 min cache, 5 min revalidation)
-  // cacheLife("supporters");
+  cacheLife("supporters");
 
   // Tag for on-demand revalidation when new donations are made
-  // cacheTag(`supporters-${randomToken}`);
-  // cacheTag(`campaign-${randomToken}`);
-  // cacheTag("supporters");
+  cacheTag(`supporters-${randomToken}`);
+  cacheTag(`campaign-${randomToken}`);
+  cacheTag("supporters");
 
   if (!recentSupporters || recentSupporters.length === 0) return null;
 

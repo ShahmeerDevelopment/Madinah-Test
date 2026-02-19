@@ -90,7 +90,7 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     deviceSizes: [640, 750, 828, 1080, 1200, 1920], // Reduced device sizes to save memory
     imageSizes: [16, 32, 48, 64, 96, 128, 256], // Reduced image sizes
-    unoptimized: process.env.HEROKU === "true", // Disable image optimization on Heroku to save memory
+    unoptimized: process.env.HEROKU === "true" && process.env.NEXT_PUBLIC_ENV !== "production", // Allow optimization on production Vercel even if HEROKU is set
   },
   // i18n,
   reactStrictMode: true,
@@ -102,24 +102,24 @@ const nextConfig = {
   // Cache life profiles for 'use cache' directive
   cacheLife: {
     campaign: {
-      stale: 60,
-      revalidate: 60,
-      expire: 300,
+      stale: 300,
+      revalidate: 300,
+      expire: 1800,
     },
     campaignContent: {
-      stale: 60,
-      revalidate: 60,
-      expire: 300,
+      stale: 300,
+      revalidate: 300,
+      expire: 1800,
     },
     supporters: {
-      stale: 60,
-      revalidate: 60,
-      expire: 300,
+      stale: 300,
+      revalidate: 300,
+      expire: 1800,
     },
     static: {
-      stale: 60,
-      revalidate: 60,
-      expire: 300,
+      stale: 3600,
+      revalidate: 3600,
+      expire: 86400,
     },
   },
 
@@ -162,7 +162,7 @@ const nextConfig = {
   // compiler: {
   //   removeConsole: process.env.NODE_ENV === "production", // Remove console.logs in production
   // },
-    async rewrites() {
+  async rewrites() {
     return [
       {
         source: "/ph/static/:path*",
@@ -211,16 +211,16 @@ const nextConfig = {
       //     },
       //   ],
       // },
-       {
-      //   // Cache static assets from /public/assets for 1 year (CDN delivery via Cloudflare)
-       source: "/assets/:path*",
-         headers: [
-           {
-             key: "Cache-Control",
-             value: "public, max-age=31536000, immutable",
-           },
-         ],
-       },
+      {
+        //   // Cache static assets from /public/assets for 1 year (CDN delivery via Cloudflare)
+        source: "/assets/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
       {
         source: "/robots.txt",
         headers: [
