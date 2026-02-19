@@ -31,7 +31,7 @@ export async function getCampaignDataCachedLeftSide(
   cacheLife({
     stale: CACHE_LIFE_TIME,
     revalidate: CACHE_LIFE_TIME,
-    expire: 300,
+    expire: 86400,
   });
 
   // Tag for on-demand revalidation
@@ -164,7 +164,7 @@ export async function getCampaignDataCachedGivingLevels(
   cacheLife({
     stale: CACHE_LIFE_TIME,
     revalidate: CACHE_LIFE_TIME,
-    expire: 300,
+    expire: 86400,
   });
 
   // Tag for on-demand revalidation
@@ -239,7 +239,7 @@ export async function getStaticCampaignDataCached(slugPath) {
   cacheLife({
     stale: CACHE_LIFE_TIME,
     revalidate: CACHE_LIFE_TIME,
-    expire: 300,
+    expire: 86400,
   });
 
   // Tag for on-demand revalidation

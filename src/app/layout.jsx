@@ -1,11 +1,10 @@
-import "@/styles/globals.css";
 import localFont from "next/font/local";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import ClientScripts from "./ClientScripts";
 import Script from "next/script";
-// import { Provider } from "react-redux";
-// import { wrapper } from "@/store/store";
 import { Providers } from "./providers";
+import fs from "fs";
+import path from "path";
 
 // Critical font - preloaded for LCP optimization
 const leagueSpartan = localFont({
@@ -48,27 +47,29 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }) {
-  // const { store } = wrapper.useWrappedStore(pageProps);
+  // Read globals.css for full inlining to eliminate Discovery Latency (~400ms)
+  // This is a server-side operation that only happens during build/request
+  const cssPath = path.join(process.cwd(), "src/styles/globals.css");
+  let criticalCss = "";
+  try {
+    criticalCss = fs.readFileSync(cssPath, "utf8");
+  } catch (err) {
+    console.error("Failed to read globals.css for inlining:", err);
+  }
+
   return (
     <html lang="en">
       <head>
-        {/* Inline Critical CSS to break critical request chains and reduce Discovery Latency */}
-        <style dangerouslySetInnerHTML={{
-          __html: `
-          *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-league-spartan), Arial, sans-serif; }
-          .root { position: relative; min-height: 100vh; min-width: 100vw; }
-          body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; box-sizing: border-box; overflow-x: hidden; padding-right: 0 !important; }
-          .ppr-skeleton-container { width: 100%; position: relative; transform: translateY(-140px); margin-bottom: -140px; display: flex; flex-direction: column; gap: 56px; }
-          .ppr-skeleton-section { height: max-content; z-index: 1; box-shadow: 0px 0px 100px 0px rgba(0, 0, 0, 0.06); border-radius: 40px; background-color: #ffffff; padding: 32px; display: flex; flex-direction: column; gap: 32px; }
-          @media (max-width: 600px) { .ppr-skeleton-container { transform: none !important; margin-bottom: 0 !important; } .ppr-skeleton-section { padding: 16px !important; } }
-          .ppr-skeleton-element { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200px 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
-          @keyframes shimmer { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
-        `}} />
+        {/* Preconnect to critical image origins - significantly faster than dns-prefetch */}
+        <link rel="preconnect" href="https://madinah.s3.us-east-2.amazonaws.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://madinah.s3.amazonaws.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://i.ibb.co" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 
-        {/* DNS prefetch for external domains - lower priority than LCP images */}
-        <link rel="dns-prefetch" href="https://madinah.s3.us-east-2.amazonaws.com" />
-        <link rel="dns-prefetch" href="https://i.ibb.co" />
-        <link rel="dns-prefetch" href="https://madinah.s3.amazonaws.com" />
+        {/* Full CSS Inlining to break critical request chains and eliminate Discovery Latency */}
+        <style dangerouslySetInnerHTML={{ __html: criticalCss }} />
+
+        {/* DNS prefetch for secondary external domains */}
         <link
           rel="dns-prefetch"
           href="https://madinah-development.s3.us-east-1.amazonaws.com"
@@ -77,7 +78,6 @@ export default function RootLayout({ children }) {
         <link rel="dns-prefetch" href="https://connect.facebook.net" />
         <link rel="dns-prefetch" href="https://js.recurly.com" />
         <link rel="dns-prefetch" href="https://cdn.growthbook.io" />
-        {/* Note: LCP image preload handled automatically by Next.js Image with priority prop */}
       </head>
       <body
         className={`${leagueSpartan.variable}`}

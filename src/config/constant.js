@@ -47,7 +47,7 @@ export const PAGES_WITH_TRANSPARENT_NAV = [""];
 
 export const CONSENT_COOKIE_NAME = "gdpr_consent";
 
-export const CACHE_LIFE_TIME = 60;
+export const CACHE_LIFE_TIME = 3600;
 
 export const RANDOM_URL = `${process.env.NEXT_PUBLIC_SHAREABLE_URL}`;
 export const PROFILE_IMAGE = "profile-image";
