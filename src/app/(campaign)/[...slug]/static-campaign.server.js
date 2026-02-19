@@ -4,7 +4,7 @@ import { cacheLife, cacheTag } from "next/cache";
 const API_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const API_VERSION = process.env.NEXT_PUBLIC_API_VERSION;
 const CLIENT_API_KEY = process.env.NEXT_PUBLIC_CLIENT_API_KEY;
-const CAMPAIGN_API_URL = process.env.NEXT_PUBLIC_CAMPAIGN_API_URL; 
+const CAMPAIGN_API_URL = process.env.NEXT_PUBLIC_CAMPAIGN_API_URL;
 
 /**
  * Get all active campaign slugs for generateStaticParams
@@ -20,7 +20,7 @@ export async function getAllActiveCampaignSlugs() {
   cacheLife({
     stale: CACHE_LIFE_TIME,
     revalidate: CACHE_LIFE_TIME,
-    expire: 300,
+    expire: 86400,
   });
 
   cacheTag("campaign-slugs");
@@ -77,7 +77,7 @@ export async function getStaticCampaignData(slugPath) {
   cacheLife({
     stale: CACHE_LIFE_TIME,
     revalidate: CACHE_LIFE_TIME,
-    expire: 300,
+    expire: 86400,
   });
 
   // Tag for on-demand revalidation
@@ -128,7 +128,7 @@ export async function getStaticSupportersData(slugPath, limit = 4, offset = 0) {
   cacheLife({
     stale: CACHE_LIFE_TIME,
     revalidate: CACHE_LIFE_TIME,
-    expire: 300,
+    expire: 86400,
   });
 
   // Tag for on-demand revalidation
