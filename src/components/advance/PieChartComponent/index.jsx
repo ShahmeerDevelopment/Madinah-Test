@@ -6,8 +6,6 @@
 import PropTypes from "prop-types";
 import React from "react";
 import dynamic from "next/dynamic";
-import "./PieChartComponent.styles.css";
-
 // Dynamic import for ApexCharts to reduce initial bundle size
 const Chart = dynamic(() => import("react-apexcharts"), {
   ssr: false,

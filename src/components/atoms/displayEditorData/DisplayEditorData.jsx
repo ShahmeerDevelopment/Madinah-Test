@@ -5,7 +5,6 @@
 import React, { useMemo, useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import Image from "next/image";
-import styles from "./style.module.css";
 import BasicText from "@/components/advance/BasicText";
 import { useCampaignImageOptimization } from "@/hooks/useCriticalImagePreload";
 import useResponsiveScreen from "@/hooks/useResponsiveScreen";
@@ -17,7 +16,7 @@ const DisplayEditorData = ({ isStory = false, content }) => {
   const [showReadMore, setShowReadMore] = useState(false);
   const contentRef = useRef(null);
   const { isSmallScreen } = useResponsiveScreen();
-  
+
   // Use the image optimization hook
   useCampaignImageOptimization(content);
 
@@ -124,7 +123,7 @@ const DisplayEditorData = ({ isStory = false, content }) => {
         parts.push(
           <span
             key={`img-${index}`}
-            className={imageData.className || styles.imageWrapper}
+            className={imageData.className || "display-image-wrapper"}
           >
             <Image
               src={imageData.src}
@@ -182,7 +181,7 @@ const DisplayEditorData = ({ isStory = false, content }) => {
         }}
       >
         <BasicText
-          className={`display-container ${styles.textEditorContainer} ql-editor`}
+          className={`display-container display-text-editor-container ql-editor`}
           sx={{ ...(isStory ? { wordWrap: "break-word" } : {}) }}
           quillEditor
         >
