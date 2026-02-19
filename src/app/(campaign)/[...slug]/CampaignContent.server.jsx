@@ -249,45 +249,44 @@ export default async function CampaignContent({ params, searchParams, token }) {
         sx={containerStyles}
       >
         {/* LEFT SIDE - Server Component */}
-        {/* <Suspense fallback={<LeftSideSkeleton />}> */}
-        <CampaignLeftSide
-          title={campaignData.title}
-          subTitle={campaignData.subTitle}
-          story={campaignData.story}
-          coverMedia={campaignData.coverMedia}
-          coverImageUrl={campaignData.coverImageUrl}
-          thumbnailCoverImageUrl={campaignData.thumbnailCoverImageUrl}
-          organizerPhoto={campaignData.organizerPhoto}
-          creator={campaignData.creator}
-          countryName={campaignData.countryName}
-          whenPublished={campaignData.whenPublished}
-          isEmailVerified={campaignData.isEmailVerified}
-          isZakatEligible={campaignData.isZakatEligible}
-          isTaxDeductable={campaignData.isTaxDeductable}
-          categoryName={campaignData.categoryName}
-          announcements={campaignData.announcements}
-          recentSupporters={campaignData.recentSupporters}
-          recentSupportersCount={campaignData.recentSupportersCount}
-          campaignId={campaignData.campaignId}
-          randomToken={slugPath}
-          previewMode={isPreviewMode}
-          currency={campaignData.currency}
-          currencyCode={campaignData.units}
-          initialGoal={campaignData.initialGoal}
-          raisedPercentage={campaignData.raisedPercentage}
-          oneTimeDonation={campaignData.oneTimeDonation}
-          recurringDonation={campaignData.recurringDonation}
-          checkStatus={campaignData.checkStatus}
-          gradingLevelsList={campaignData.gradingLevelsList}
-          currencyConversionIdCampaign={
-            campaignData.currencyConversionIdCampaign
-          }
-          url={campaignData.url}
-          campaignEndDate={campaignData.campaignEndDate}
-          meta={campaignData.meta}
-        />
-
-        {/* </Suspense> */}
+        <Suspense fallback={<LeftSideSkeleton />}>
+          <CampaignLeftSide
+            title={campaignData.title}
+            subTitle={campaignData.subTitle}
+            story={campaignData.story}
+            coverMedia={campaignData.coverMedia}
+            coverImageUrl={campaignData.coverImageUrl}
+            thumbnailCoverImageUrl={campaignData.thumbnailCoverImageUrl}
+            organizerPhoto={campaignData.organizerPhoto}
+            creator={campaignData.creator}
+            countryName={campaignData.countryName}
+            whenPublished={campaignData.whenPublished}
+            isEmailVerified={campaignData.isEmailVerified}
+            isZakatEligible={campaignData.isZakatEligible}
+            isTaxDeductable={campaignData.isTaxDeductable}
+            categoryName={campaignData.categoryName}
+            announcements={campaignData.announcements}
+            recentSupporters={campaignData.recentSupporters}
+            recentSupportersCount={campaignData.recentSupportersCount}
+            campaignId={campaignData.campaignId}
+            randomToken={slugPath}
+            previewMode={isPreviewMode}
+            currency={campaignData.currency}
+            currencyCode={campaignData.units}
+            initialGoal={campaignData.initialGoal}
+            raisedPercentage={campaignData.raisedPercentage}
+            oneTimeDonation={campaignData.oneTimeDonation}
+            recurringDonation={campaignData.recurringDonation}
+            checkStatus={campaignData.checkStatus}
+            gradingLevelsList={campaignData.gradingLevelsList}
+            currencyConversionIdCampaign={
+              campaignData.currencyConversionIdCampaign
+            }
+            url={campaignData.url}
+            campaignEndDate={campaignData.campaignEndDate}
+            meta={campaignData.meta}
+          />
+        </Suspense>
 
         {/* RIGHT SIDE - Server Component - Desktop Only */}
         <BoxComponent

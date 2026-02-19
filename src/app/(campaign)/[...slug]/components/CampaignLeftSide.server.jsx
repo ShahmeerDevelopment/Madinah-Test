@@ -753,15 +753,15 @@ export default async function CampaignLeftSide({
           checkStatus={checkStatus}
           previewMode={previewMode}
         />
-        {/* <Suspense
+        <Suspense
           fallback={
             <BoxComponent
               sx={{ minHeight: "200px", backgroundColor: "#f9f9f9" }}
             />
           }
-        > */}
-        <CampaignStory story={story} campaignId={campaignId} />
-        {/* </Suspense> */}
+        >
+          <CampaignStory story={story} campaignId={campaignId} />
+        </Suspense>
         {/* <CampaignBadges
           isZakatEligible={isZakatEligible}
           isTaxDeductable={isTaxDeductable}
@@ -779,28 +779,28 @@ export default async function CampaignLeftSide({
         />
       </WhiteBackgroundSection>
 
-      {/* <Suspense fallback={<MobileGivingLevelsSkeleton />}> */}
-      <DeferredMobileGivingLevels
-        gradingLevelsList={gradingLevelsList}
-        currency={currency}
-        currencyCode={currencyCode}
-        currencyConversionIdCampaign={currencyConversionIdCampaign}
-        checkStatus={checkStatus}
-        url={url}
-        randomToken={randomToken}
-        previewMode={previewMode}
-        title={title}
-      />
-      {/* </Suspense> */}
+      <Suspense fallback={<MobileGivingLevelsSkeleton />}>
+        <DeferredMobileGivingLevels
+          gradingLevelsList={gradingLevelsList}
+          currency={currency}
+          currencyCode={currencyCode}
+          currencyConversionIdCampaign={currencyConversionIdCampaign}
+          checkStatus={checkStatus}
+          url={url}
+          randomToken={randomToken}
+          previewMode={previewMode}
+          title={title}
+        />
+      </Suspense>
 
-      {/* <Suspense fallback={<UpdatesSkeleton />}> */}
-      <CachedUpdatesSection
-        announcements={announcements}
-        organizerPhoto={organizerPhoto}
-        creator={creator}
-        campaignId={campaignId}
-      />
-      {/* </Suspense> */}
+      <Suspense fallback={<UpdatesSkeleton />}>
+        <CachedUpdatesSection
+          announcements={announcements}
+          organizerPhoto={organizerPhoto}
+          creator={creator}
+          campaignId={campaignId}
+        />
+      </Suspense>
 
       <Suspense fallback={<SupportersSkeleton />}>
         {!previewMode && (
