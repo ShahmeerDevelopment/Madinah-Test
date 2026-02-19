@@ -124,8 +124,7 @@ const nextConfig = {
   },
 
   // Optimization improvements
-  // swcMinify: true, // Use SWC minifier instead of Terser for better performance
-  compress: true, // Enable compression
+  compress: true, // Enable Gzip/Brotli compression
 
   // React Compiler - automatically memoizes components to reduce re-renders and TBT
   // This eliminates the need for manual useMemo/useCallback in most cases
@@ -159,6 +158,15 @@ const nextConfig = {
     // Tree shake unused code more aggressively
     esmExternals: true,
   },
+  // Transpile specific packages to modern JS to reduce legacy JS overhead
+  transpilePackages: [
+    "swiper",
+    "react-slick",
+    "framer-motion",
+    "@mui/material",
+    "@mui/icons-material",
+    "@mui/x-date-pickers",
+  ],
   // compiler: {
   //   removeConsole: process.env.NODE_ENV === "production", // Remove console.logs in production
   // },

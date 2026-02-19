@@ -22,8 +22,8 @@ const notoSansArabic = localFont({
   src: "../../public/fonts/noto-sans-arabic.woff2",
   variable: "--font-noto-sans-arabic",
   weight: "400 700",
-  display: "swap",
-  preload: false, // Don't preload - not critical for initial paint
+  display: "swap", // Ensure swap is used to prevent invisible text
+  preload: false, // Don't preload - not critical for initial LCP (English site)
 });
 
 export const metadata = {
