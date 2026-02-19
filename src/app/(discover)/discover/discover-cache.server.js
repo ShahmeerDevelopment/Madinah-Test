@@ -34,7 +34,7 @@ export async function getCategoriesListCached() {
   cacheLife({
     stale: CACHE_LIFE_TIME,
     revalidate: CACHE_LIFE_TIME,
-    expire: 300,
+    expire: 86400,
   });
 
   // Tag for on-demand revalidation
@@ -81,7 +81,7 @@ export async function getCountriesListCached() {
   cacheLife({
     stale: CACHE_LIFE_TIME,
     revalidate: CACHE_LIFE_TIME,
-    expire: 300,
+    expire: 86400,
   });
 
   // Tag for on-demand revalidation
@@ -126,7 +126,7 @@ export async function getFeaturedCampaignsCached(cfCountry = null) {
   cacheLife({
     stale: CACHE_LIFE_TIME,
     revalidate: CACHE_LIFE_TIME,
-    expire: 300,
+    expire: 86400,
   });
 
   cacheTag("featured-campaigns");
@@ -135,7 +135,7 @@ export async function getFeaturedCampaignsCached(cfCountry = null) {
   const query = "type=featured";
   const limit = 100;
   const offset = 0;
-  
+
   // Construct URL similar to getAllCampaignsBasedOnQuery
   let url = `${CAMPAIGN_API_URL}${API_VERSION}user/campaigns?${query}&limit=${limit}&offset=${offset}`;
   if (cfCountry) {
@@ -155,9 +155,9 @@ export async function getFeaturedCampaignsCached(cfCountry = null) {
     });
 
     if (!response.ok) {
-        // Log error but don't throw to prevent crashing the page
-        console.error(`HTTP error fetching featured campaigns! status: ${response.status}`);
-        return { data: { success: false, data: { campaigns: [] } } };
+      // Log error but don't throw to prevent crashing the page
+      console.error(`HTTP error fetching featured campaigns! status: ${response.status}`);
+      return { data: { success: false, data: { campaigns: [] } } };
     }
 
     const data = await response.json();
@@ -177,7 +177,7 @@ export async function getOrganizationsCached() {
   cacheLife({
     stale: CACHE_LIFE_TIME,
     revalidate: CACHE_LIFE_TIME,
-    expire: 300,
+    expire: 86400,
   });
 
   cacheTag("organizations");
@@ -186,7 +186,7 @@ export async function getOrganizationsCached() {
   const searchingCharacters = "";
   const limit = 100;
   const offSet = 0;
-  
+
   // Construct URL similar to getCharityList
   const url = `${API_URL}${API_VERSION}campaign/charity/organizations?searchText=${searchingCharacters}&limit=${limit}&offset=${offSet}`;
 
@@ -203,8 +203,8 @@ export async function getOrganizationsCached() {
     });
 
     if (!response.ok) {
-         console.error(`HTTP error fetching organizations! status: ${response.status}`);
-         return { data: { success: false, data: { charityOrganizations: [] } } };
+      console.error(`HTTP error fetching organizations! status: ${response.status}`);
+      return { data: { success: false, data: { charityOrganizations: [] } } };
     }
 
     const data = await response.json();
@@ -224,7 +224,7 @@ export async function getTrendingCampaignsCached(cfCountry = null) {
   cacheLife({
     stale: CACHE_LIFE_TIME,
     revalidate: CACHE_LIFE_TIME,
-    expire: 300,
+    expire: 86400,
   });
 
   cacheTag("trending-campaigns");
@@ -252,8 +252,8 @@ export async function getTrendingCampaignsCached(cfCountry = null) {
     });
 
     if (!response.ok) {
-        console.error(`HTTP error fetching trending campaigns! status: ${response.status}`);
-        return { data: { success: false, data: { campaigns: [] } } };
+      console.error(`HTTP error fetching trending campaigns! status: ${response.status}`);
+      return { data: { success: false, data: { campaigns: [] } } };
     }
 
     const data = await response.json();

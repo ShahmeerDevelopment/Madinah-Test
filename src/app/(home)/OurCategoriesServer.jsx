@@ -200,7 +200,7 @@ async function CategoriesContent() {
   cacheLife({
     stale: 60,
     revalidate: 60,
-    expire: 300,
+    expire: 86400,
   });
   cacheTag("categories");
 

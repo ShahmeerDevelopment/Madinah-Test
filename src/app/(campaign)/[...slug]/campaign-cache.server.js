@@ -295,19 +295,15 @@ export async function getSupportersCached(
   // ip = null,
   // token = null
 ) {
-  // "use cache";
+  "use cache";
 
-  // cacheLife({
-  //   stale: CACHE_LIFE_TIME,
-  //   revalidate: CACHE_LIFE_TIME,
-  //   expire: CACHE_LIFE_TIME,
-  // });
+  cacheLife("supporters");
 
   // Tag for on-demand revalidation
-  // const decodedSlugPath = decodeURIComponent(slugPath);
-  // cacheTag(`supporters-${decodedSlugPath}`);
-  // cacheTag(`campaign-${decodedSlugPath}`);
-  // cacheTag("supporters");
+  const decodedSlugPath = decodeURIComponent(slugPath);
+  cacheTag(`supporters-${decodedSlugPath}`);
+  cacheTag(`campaign-${decodedSlugPath}`);
+  cacheTag("supporters");
 
   const url = `${CAMPAIGN_API_URL}${API_VERSION}campaign/${slugPath}/supporters?limit=${limit}&offset=${offset}`;
 

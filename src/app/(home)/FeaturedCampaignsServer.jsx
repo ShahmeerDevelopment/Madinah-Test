@@ -70,7 +70,7 @@ async function getFeaturedCampaigns(cfCountry) {
   cacheLife({
     stale: CACHE_LIFE_TIME,
     revalidate: CACHE_LIFE_TIME,
-    expire: 300,
+    expire: 86400,
   });
   // Tag for on-demand revalidation
   cacheTag("featured-campaigns");

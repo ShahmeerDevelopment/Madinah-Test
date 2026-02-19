@@ -169,7 +169,7 @@ async function OrganizationsContent() {
   cacheLife({
     stale: CACHE_LIFE_TIME,
     revalidate: CACHE_LIFE_TIME,
-    expire: 300,
+    expire: 86400,
   });
   // Tag for on-demand revalidation
   cacheTag("organizations");
@@ -178,10 +178,10 @@ async function OrganizationsContent() {
 
   const organizations = result?.success
     ? (result.data.charityOrganizations || []).map((org) => ({
-        id: org._id,
-        image: org.imageUrl,
-        payload: org,
-      }))
+      id: org._id,
+      image: org.imageUrl,
+      payload: org,
+    }))
     : [];
 
   return <OrganizationsSection organizations={organizations} />;

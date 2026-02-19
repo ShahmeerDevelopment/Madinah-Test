@@ -204,7 +204,7 @@ async function RecentCampaignsContent() {
   cacheLife({
     stale: CACHE_LIFE_TIME,
     revalidate: CACHE_LIFE_TIME,
-    expire: 300,
+    expire: 86400,
   });
   cacheTag("recent-campaigns");
 
@@ -212,15 +212,15 @@ async function RecentCampaignsContent() {
 
   const campaigns = result?.success
     ? (result.data.campaigns || []).map((c) => ({
-        id: c._id,
-        title: c.title,
-        subTitle: c.subTitle,
-        image: c.coverImageUrl || getThumbnailUrl(c.videoLinks?.[0]?.url),
-        raisedAmount: c.collectedAmount,
-        raisedCurrency: c.amountCurrency,
-        totalGoal: c.targetAmount,
-        urlRedirect: c.randomToken,
-      }))
+      id: c._id,
+      title: c.title,
+      subTitle: c.subTitle,
+      image: c.coverImageUrl || getThumbnailUrl(c.videoLinks?.[0]?.url),
+      raisedAmount: c.collectedAmount,
+      raisedCurrency: c.amountCurrency,
+      totalGoal: c.targetAmount,
+      urlRedirect: c.randomToken,
+    }))
     : [];
 
   return <BigCarousalSection campaigns={campaigns} />;

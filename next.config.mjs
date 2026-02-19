@@ -104,17 +104,17 @@ const nextConfig = {
     campaign: {
       stale: 300,
       revalidate: 300,
-      expire: 1800,
+      expire: 86400,
     },
     campaignContent: {
       stale: 300,
       revalidate: 300,
-      expire: 1800,
+      expire: 86400,
     },
     supporters: {
       stale: 300,
       revalidate: 300,
-      expire: 1800,
+      expire: 86400,
     },
     static: {
       stale: 3600,
